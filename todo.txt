@@ -1,0 +1,16 @@
+Når man kjøper snus machine så blir diy snuser +5 snus hvert sekund
+
+Counter på hvor mange man har kjøpt
+x1, x10 og max buy
+
+upgrades: 
+- Når man kjøper snus machine så blir diy snuser +5 snus hvert sekund
+
+- white snus upgrade. all stats x2 ( bytter fallende snus med halvparten hvite. etter Planet
+- Snuse recruit. snuse gang x5 (etter army)
+
+
+
+
+git commit -m "beskrivelse av endring"
+git push origin main
