@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snus Clicker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Texturina:ital,opsz,wght@0,12..72,900;1,12..72,900&display=swap" rel="stylesheet">
+    <body>
+        <audio id="audio-player" loop>
+            <source id="audio-source" src="" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+
+        <div class="container">
+            <!-- Social bar on top -->
+            <div id="social-bar">
+                <p id="social-text">FUCK</p>
+            </div>  
+            <!--SNUS AND CURRENCY-->
+            <div class="snuscard">
+                <div class="currency-container">
+                    <div class="currency" id="currency">0</div>
+                    <div class="currency" style="font-size: 3vh;">SNUS</div>
+                </div>
+                <button id="snus-button" class="snusbtn" onclick="updateCurrency(); animateImage('snus-image');">
+                    <div class="shadow-wrapper">
+                        <img src="images/snus.png" alt="Snus" id="snus-image" style="width: 300px; height: 300px;">
+                    </div>
+                </button>
+            </div>
+
+            <!--STATS AND MISC-->
+            <div class="leftcard" id="left-card">
+                <div id="audio-controls">
+                    <input style="margin-top: 10px;" type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2"><br>
+                    <button id="prev-track">⏮️</button>
+                    <button id="play-pause">▶️</button>
+                    <button id="next-track">⏭️</button>
+                </div>
+                <img src="images/title.gif" class="header"></img>
+                <div class="statcard" id="stats-card">
+                    <div id="snus-per-click">1</div>
+                    <div >Snus every click!</div>
+                    <div id="sps-display" style="margin-top: 2vh;">0</div>
+                    <div >Snus Per Second</div>
+                </div>
+
+                <button onclick="showBoosterScreen()" class="left-btn">Bøzzters</button>
+                <button onclick="showBrandScreen()" class="left-btn">Snus Brands</button>
+                <button class="left-btn">Achievments</button>
+
+                <button id="reset-btn" class="btn left-btn reset-button" onclick="showResetScreen()">Reset Game</button>
+                
+            </div>
+
+            <!--BUY UPGRADES-->
+            <div class="buycard">
+                <!--DIY MAKER-->
+                <div id="auto-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="auto-btn" class="btn buy-button" onclick=" animateImage('diy-image'); buyItem('auto');">
+                        <img src="images/icons/diy.png" id="diy-image" alt="DIY Snus Maker">
+                        </button>
+                        <div id="auto-price-btn" class="item-price-left">
+                        10,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank1" style="transform: rotate(-9deg);">
+                        <div class="item-text">
+                        DIY Snus Maker
+                        </div>
+                        <div id="auto-benefit-text" class="stats-text">
+                            +1 Snus/Sec
+                        </div>
+                        <div id="auto-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+
+                <!--FELLOW SNUSER-->
+                <div id="click-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="click-btn" class="btn buy-button" onclick=" animateImage('snuser-image'); buyItem('click');">
+                        <img src="images/icons/snuser.png" id="snuser-image" alt="Fellow Snuser">
+                        </button>
+                        <div id="click-price-btn" class="item-price-left">
+                        50,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank2" style="transform: rotate(6deg);">
+                        <div class="item-text">
+                        Fellow Snuser
+                        </div>
+                        <div id="click-benefit-text" class="stats-text">
+                            +5 Snus/Click
+                        </div>
+                        <div id="click-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                
+                <!--MACHINE-->
+                <div id="machine-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="machine-btn" class="btn buy-button" onclick=" animateImage('machine-image'); buyItem('machine');">
+                            <img src="images/icons/machine.png" id="machine-image" alt="Snus Machine">
+                        </button>
+                    <div id="machine-price-btn" class="item-price-left">
+                    500,- Snus
+                    </div>
+                </div>
+            
+                <!-- Right Column: Plank with Text -->
+                <div class="plank-container plank3" style="transform: rotate(5deg);">
+                    <div class="item-text">
+                    Snus Machine
+                    </div>
+                    <div id="machine-benefit-text" class="stats-text">
+                        +25 Snus/Sec
+                    </div>
+                    <div id="machine-amount-text" class="amount-upgrades-text">
+                        0
+                    </div>
+                </div>
+                    </div>
+
+                <!--FACTORY-->
+                <div id="factory-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="factory-btn" class="btn buy-button" onclick=" animateImage('factory-image'); buyItem('factory');">
+                        <img src="images/icons/factory.png" id="factory-image" alt="Snus Factory">
+                        </button>
+                        <div id="factory-price-btn" class="item-price-left">
+                        5.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank2" style="transform: rotate(-6deg);">
+                        <div class="item-text">
+                        Snus Factory
+                        </div>
+                        <div id="factory-benefit-text" class="stats-text">
+                            +100 Snus/Sec
+                        </div>
+                        <div id="factory-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--MOUNTAIN-->
+                <div id="mountain-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="mountain-btn" class="btn buy-button" onclick=" animateImage('mountain-image'); buyItem('mountain');">
+                        <img src="images/icons/mountain.png" id="mountain-image" alt="Snus Mountain">
+                        </button>
+                        <div id="mountain-price-btn" class="item-price-left">
+                        30.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank1" style="transform: rotate(3deg);">
+                        <div class="item-text">
+                        Snus Mountain
+                        </div>
+                        <div class="stats-text" id="mountain-benefit-text">
+                            +300 Snus/Sec
+                        </div>
+                        <div id="mountain-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--SNUSEGANG-->
+                <div id="snusegang-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="snusegang-btn" class="btn buy-button" onclick=" animateImage('snusegang-image'); buyItem('snusegang');">
+                        <img src="images/icons/gang.png" id="snusegang-image" alt="Snus Gang">
+                        </button>
+                        <div id="snusegang-price-btn" class="item-price-left">
+                        200.000,- Snus
+                        </div>
+
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank2" style="transform: rotate(-5deg);">
+                        <div class="item-text">
+                        Snuse Gang
+                        </div>
+                        <div class="stats-text" id="snusegang-benefit-text">
+                            +5.000 Snus/Click
+                        </div>
+                        <div id="snusegang-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--OCEAN-->
+                <div id="ocean-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="ocean-btn" class="btn buy-button" onclick=" animateImage('ocean-image'); buyItem('ocean');">
+                        <img src="images/icons/ocean.png" id="ocean-image" alt="Snus Ocean">
+                        </button>
+                        <div id="ocean-price-btn" class="item-price-left">
+                        1.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank3" style="transform: rotate(4deg);">
+                        <div class="item-text">
+                        Snus Ocean
+                        </div>
+                        <div class="stats-text" id="ocean-benefit-text">
+                            +15.000 Snus/Sec
+                        </div>
+                        <div id="ocean-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--PLANET-->
+                <div id="planet-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="planet-btn" class="btn buy-button" onclick=" animateImage('planet-image'); buyItem('planet');">
+                        <img src="images/icons/planet.png" id="planet-image" alt="Snus Planet">
+                        </button>
+                        <div id="planet-price-btn" class="item-price-left">
+                        5.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank1" style="transform: rotate(-2deg);">
+                        <div class="item-text">
+                        Snus Planet
+                        </div>
+                        <div class="stats-text" id="planet-benefit-text">
+                            +150.000 Snus/Sec
+                        </div>
+                        <div id="planet-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--SNUSEARMY-->
+                <div id="army-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="army-btn" class="btn buy-button" onclick=" animateImage('army-image'); buyItem('army');">
+                        <img src="images/icons/army.png" id="army-image" alt="Snuse Army">
+                        </button>
+                        <div id="army-price-btn" class="item-price-left">
+                        25.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank1" style="transform: rotate(5deg);">
+                        <div class="item-text">
+                        Snuse Army
+                        </div>
+                        <div class="stats-text" id="army-benefit-text">
+                            +50.000 Snus/Click
+                        </div>
+                        <div id="army-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--STAR-->
+                <div id="star-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="star-btn" class="btn buy-button" onclick=" animateImage('star-image'); buyItem('star');">
+                        <img src="images/icons/star.png" id="star-image" alt="Snus Star">
+                        </button>
+                        <div id="star-price-btn" class="item-price-left">
+                        150.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank3" style="transform: rotate(-2deg);">
+                        <div class="item-text">
+                        Snus Star
+                        </div>
+                        <div class="stats-text" id="star-benefit-text">
+                            +2.000.000 S/Sec
+                        </div>
+                        <div id="star-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--GALAXY-->    
+                <div id="galaxy-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="galaxy-btn" class="btn buy-button" onclick=" animateImage('galaxy-image'); buyItem('galaxy');">
+                        <img src="images/icons/galaxy.png" id="galaxy-image" alt="Snus Galaxy">
+                        </button>
+                        <div id="galaxy-price-btn" class="item-price-left">
+                        1.000.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank2" style="transform: rotate(-4deg);">
+                        <div class="item-text">
+                        Snus Galaxy
+                        </div>
+                        <div class="stats-text" id="galaxy-benefit-text">
+                            +20.000.000 S/Sec
+                        </div>
+                        <div id="galaxy-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--SNUSE Fleet-->    
+                <div id="fleet-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="fleet-btn" class="btn buy-button" onclick=" animateImage('fleet-image'); buyItem('fleet');">
+                        <img src="images/icons/fleet.png" id="fleet-image" alt="Snuse Fleet">
+                        </button>
+                        <div id="fleet-price-btn" class="item-price-left">
+                        5.000.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank3" style="transform: rotate(6deg);">
+                        <div class="item-text">
+                        Snus Fleet
+                        </div>
+                        <div class="stats-text" id="fleet-benefit-text">
+                            +10.000.000 S/Click
+                        </div>
+                        <div id="fleet-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--UNIVERSE-->
+                <div id="universe-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="universe-btn" class="btn buy-button" onclick=" animateImage('universe-image'); buyItem('universe');">
+                        <img src="images/icons/universe.png" id="universe-image" alt="Snus Universe">
+                        </button>
+                        <div id="universe-price-btn" class="item-price-left">
+                        25.000.000.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank1" style="transform: rotate(-2deg);">
+                        <div class="item-text">
+                        Snus Universe
+                        </div>
+                        <div class="stats-text"id="universe-benefit-text">
+                            +300.000.000 S/Sec
+                        </div>
+                        <div id="universe-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>
+                <!--MULTIVERSE-->
+                <div id="multiverse-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="multiverse-btn" class="btn buy-button" onclick=" animateImage('multiverse-image'); buyItem('multiverse');">
+                        <img src="images/icons/multiverse.png" id="multiverse-image" alt="Snus Multiverse">
+                        </button>
+                        <div id="multiverse-price-btn" class="item-price-left">
+                        299.792.458.000,- Snus
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank2" style="transform: rotate(-1deg);">
+                        <div class="item-text">
+                        Snus Multiverse
+                        </div>
+                        <div class="stats-text" id="multiverse-benefit-text" style="font-size: 25px;">
+                            +299.792.458.000 S/Sec
+                        </div>
+                        <div id="multiverse-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>  
+                <!--SINGULARITY-->
+                <div id="singularity-btn" class="buy-item">
+                    <!-- Left Column: Button + Price -->
+                    <div class="icon-container">
+                        <button id="singularity-btn" class="btn buy-button" onclick=" animateImage('singularity-image'); buyItem('singularity');">
+                        <img src="images/icons/singularity.png" id="singularity-image" alt="Snus Singularity">
+                        </button>
+                        <div id="singularity-price-btn" class="item-price-left">
+                        0,- Snus?
+                        </div>
+                    </div>
+                
+                    <!-- Right Column: Plank with Text -->
+                    <div class="plank-container plank3" style="transform: rotate(-2deg);">
+                        <div class="item-text">
+                        Snus Singularity
+                        </div>
+                        <div class="stats-text" id="singularity-benefit-text">
+                            +1 Snus/Click
+                        </div>
+                        <div id="singularity-amount-text" class="amount-upgrades-text">
+                            0
+                        </div>
+                    </div>
+                    </div>   
+            </div>
+
+        </div>
+
+
+        <!--SCREENS-->
+        <div id="end-screen">
+            <h1>CONGRATZ</h1>
+            <p>YOU ARE THE SNUS GOD!!!</p>
+            <button id="hide-screen" onclick="hideEndScreen()">click here to keep playing for no reason</button>
+        </div>
+
+        <div id="booster-screen">
+            <h1 id="no-money-text" style="color: red; font-size: 20px;">Not Enough Money</h1>
+            <button id="close-booster-screen" onclick="hideBoosterScreen()">❌</button>
+            <h1 style="color: white;">Buy Bøzzters with Snus</h1>
+        
+            <div class="brand-grid">
+
+                <div class="brand-item" id="booster-auto">
+                    <img src="images/icons/diy.png" alt="DYI Maker">
+                    <p>DIY Snus Maker x5 - 1,000 Snus</p>
+                    <button onclick="buyBooster('auto', 5, 1000)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="booster-click">
+                    <img src="images/icons/snuser.png" alt="Fellow Snuser">
+                    <p>Fellow Snuser x2 - 15,000 Snus</p>
+                    <button onclick="buyBooster('click', 2, 15000)">Buy</button>
+                </div>
+                <div class="brand-item" id="booster-machine">
+                    <img src="images/icons/machine.png" alt="Snus Machine">
+                    <p>Snus Machine x2 - 150,000 Snus</p>
+                    <button onclick="buyBooster('machine', 2, 150000)">Buy</button>
+                </div>
+                <div class="brand-item" id="booster-snusegang">
+                    <img src="images/icons/gang.png" alt="Snus Machine">
+                    <p>Snuse Gang x5 - 25,000,000 Snus</p>
+                    <button onclick="buyBooster('snusegang', 5, 25000000)">Buy</button>
+                </div>
+   
+            </div>
+        
+        </div>
+
+        <div id="brand-screen">
+            <h1 id="no-money-text-brand" style="color: red; font-size: 20px;">Not Enough Money</h1>
+            <button id="close-brand-screen" onclick="hideBrandScreen()">❌</button>
+            <h1 style="color: white;">Buy your brand with Snus</h1>
+        
+            <div class="brand-grid">
+                <div class="brand-item" id="brand-1">
+                    <img src="images/snus-boks/epok-freeze.png" alt="Epok Freeze">
+                    <p>Epok Freeze - 5,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(1)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-2">
+                    <img src="images/snus-boks/loop-norsk.png" alt="Loop Jalapeno Lime">
+                    <p>Loop Jalapeno Lime - 10,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(2)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-3">
+                    <img src="images/snus-boks/epok-red.png" alt="Epok Red Glacier">
+                    <p>Epok Red Glacier - 20,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(3)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-4">
+                    <img src="images/snus-boks/skruf-fresh.png" alt="Skruf Fresh">
+                    <p>Skruf Fresh - 25,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(4)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-5">
+                    <img src="images/snus-boks/g3.png" alt="G3 Extra Strong">
+                    <p>G3 Extra Strong - 50,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(5)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-6">
+                    <img src="images/snus-boks/zyn.png" alt="ZYN Cool Mint">
+                    <p>ZYN Cool Mint - 100,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(6)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-7">
+                    <img src="images/snus-boks/loop-blue.png" alt="Loop Blue">
+                    <p>Loop Blue - 250,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(7)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-8">
+                    <img src="images/snus-boks/loop-jalapeno.png" alt="Loop Jalapeno Lime Deluxe">
+                    <p>Loop Jalapeno Lime Deluxe - 500,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(8)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-9">
+                    <img src="images/snus-boks/general.png" alt="General Classic">
+                    <p>General Classic - 1,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(9)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-10">
+                    <img src="images/snus-boks/g3-load.png" alt="G3 Load">
+                    <p>G3 Load - 10,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(10)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-11">
+                    <img src="images/snus-boks/epok-deluxe.png" alt="Epok Deluxe">
+                    <p>Epok Deluxe - 50,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(11)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-12">
+                    <img src="images/snus-boks/siberia.png" alt="Siberia">
+                    <p>Siberia - 100,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(12)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-13">
+                    <img src="images/snus-boks/skruf-super-white.png" alt="Skruf Super White">
+                    <p>Skruf Super White - 100,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(13)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-14">
+                    <img src="images/snus-boks/siberia-black.png" alt="Siberia Black">
+                    <p>Siberia Black - 500,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(14)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-15">
+                    <img src="images/snus-boks/ettan.png" alt="Ettan">
+                    <p>Ettan - 800,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(15)">Buy</button>
+                </div>
+        
+                <div class="brand-item" id="brand-16">
+                    <img src="images/snus-boks/1800.png" alt="Real 1800s Snus">
+                    <p>Real 1800s Snus - 2,500,000,000 Snus</p>
+                    <button onclick="buyOrActivateBrand(16)">Buy</button>
+                </div>
+            </div>
+        
+        </div>
+        
+        
+        
+        <div id="reset-screen">
+            <h1>Are you sure you want to restart?</h1>
+            <p>You will lose literally everything.</p>
+            <button id="hide-screen" onclick="resetGameState()">Yeah</button><button id="hide-screen" onclick="hideResetScreen()">Nope</button>
+        </div>
+
+        <script src="script.js"></script>
+        <script src="script2.js"></script>
+        <script src="audio.js"></script>
+    </body>
+</html>

@@ -1,0 +1,626 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap");
+
+
+/* Main body styling without the background image directly */
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: Oswald, sans-serif;
+	background-color: #261e17;
+	position: relative;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-image: url("images/wood_background.png");
+	background-size: cover;
+	background-position: center;
+	filter: blur(5px) brightness(0.6);
+	border: none;
+	z-index: -1;
+}
+
+.falling-snus {
+	position: absolute;
+	animation: fall 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+	border-radius: 100%;
+}
+
+@keyframes fall {
+	0% {
+		transform: translateY(-50px);
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(200vh);
+		opacity: 0;
+	}
+}
+
+.header {
+	position: relative;
+	display: flex;
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+	margin-top: 20px;
+	margin-bottom: 20px;
+	max-width: 150%;
+	height: auto;
+	left: -25%;
+	border: none;
+}
+
+/* Card styling */
+.container {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	align-items: center;
+	height: 100vh;
+}
+
+#social-bar {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	height: 5%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: white;
+	padding: 10px 0;
+	font-size: 1.5vh;
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#social-text {
+	margin-top: 0.5vh;
+	display: inline-block;
+	position: relative;
+	font-size: 20px;
+	white-space: nowrap;
+	opacity: 0; /* Initially hidden */
+}
+
+@keyframes scrollText {
+	0% {
+		transform: translateX(100%);
+		opacity: 1;
+	}
+	99% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(-150%);
+		opacity: 0;
+	}
+}
+#no-money-text {
+	position: fixed;
+	opacity: 0;
+	top: 10px; /* Distance from the top */
+}
+#no-money-text-brand {
+	position: fixed;
+	opacity: 0;
+	top: 10px; /* Distance from the top */
+}
+
+@keyframes noMoneyText {
+	0% {
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+	}
+
+	90% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.statcard {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 900;
+	font-style: normal;
+	font-size: 1.5vw;
+	background-image: url("images/chipboard.png");
+	background-size: cover;
+	position: relative;
+	text-align: center;
+	padding-top: 3vh;
+	width: 80%;
+	height: 150px;
+	margin-left: 10%;
+	margin-bottom: 10px;
+	box-shadow: 7px 11px 7.9px 0px rgba(0, 0, 0, 0.75);
+}
+
+.left-btn {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 900;
+	font-style: normal;
+	font-size: 2vw;
+	color: white;
+	background-image: url("images/chipboard.png");
+	background-size: cover;
+	position: relative;
+	width: 80%;
+	height: 50px;
+	margin-left: 10%;
+	margin-bottom: 10px;
+	box-shadow: 7px 11px 7.9px 0px rgba(0, 0, 0, 0.75);
+}
+
+.leftcard,
+.buycard {
+	padding: 10px;
+	border-radius: 0px;
+	color: white;
+	box-shadow: 19px 19px 40px -3px rgba(0, 0, 0, 0.75);
+}
+
+.leftcard {
+	width: 20%;
+	height: 100%;
+	position: absolute;
+	display: block;
+	left: 0;
+	background-image: url("images/background.jpg");
+}
+
+.parent-container {
+	display: flex;
+	justify-content: center; /* Centers horizontally */
+	height: 100vh; /* Ensures it takes the full height of the screen */
+}
+
+.buycard {
+	box-shadow: -19px 19px 40px -3px rgba(0, 0, 0, 0.75);
+	background-image: url("images/background.jpg");
+	width: 35%;
+	height: 100vh; /* Make it as high as the viewport */
+	position: absolute; /* Ensure the element is positioned absolutely */
+	top: 0; /* Align to the top of the page */
+	right: 0; /* Align to the right of the page */
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-color: #261e17 #30251d; /* Fallback color for Firefox */
+}
+
+/* For WebKit browsers */
+.buycard::-webkit-scrollbar {
+	width: 12px; /* Adjust scrollbar width */
+}
+
+.buycard::-webkit-scrollbar-track {
+	background: #30251d; /* Background color of the scrollbar track */
+}
+
+.buycard::-webkit-scrollbar-thumb {
+	background-color: #261e17; /* Color of the scrollbar thumb */
+	border-radius: 6px; /* Rounded corners for the thumb */
+	border: 3px solid #30251d; /* Adds a little padding around the thumb */
+}
+
+/* The main container for each buy item */
+.buy-item {
+	display: flex; /* Side-by-side layout */
+	align-items: flex-start; /* Align the top edges */
+	gap: 10px; /* Spacing between columns */
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+/* Group the button and price in a vertical column */
+.icon-container {
+	display: flex;
+	flex-direction: column;
+	width: 100px;
+}
+
+/* Button styling */
+.btn.buy-button {
+	background-color: #261e17;
+	border: none;
+	padding: 5px;
+	margin: 5px;
+	cursor: pointer;
+	color: white;
+	font-size: 20px;
+	filter: drop-shadow(10px 16px 7.9px rgba(0, 0, 0, 0.75));
+	border-radius: 27px;
+	overflow: hidden;
+}
+
+/* Image inside the button */
+.btn.buy-button img {
+	max-width: 80px;
+	height: auto;
+	display: flex;
+	border-radius: 27px;
+}
+
+/* Price below the button on the left */
+.item-price-left {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 900;
+	font-style: normal;
+	font-size: 20px;
+	color: white;
+
+	text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+		2px 2px 0 #000;
+
+	margin-top: 5px;
+	white-space: nowrap;
+	text-align: center;
+}
+
+/* The plank container on the right */
+.plank-container {
+	position: relative;
+	background-size: cover;
+	width: 400px;
+	height: 100px;
+	filter: drop-shadow(10px 16px 7.9px rgba(0, 0, 0, 0.75));
+}
+
+.plank1 {
+	background: url("images/plank1.png") no-repeat center center;
+	background-size: cover;
+}
+
+.plank2 {
+	background: url("images/plank2.png") no-repeat center center;
+	background-size: cover;
+}
+
+.plank3 {
+	background: url("images/plank3.png") no-repeat center center;
+	background-size: cover;
+}
+
+/* Text on the plank */
+.item-text {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 900;
+	font-style: normal;
+	font-size: clamp(
+		14px,
+		5vw,
+		40px
+	); /* 👈 Auto scales between 14px and 30px */
+	white-space: nowrap; /* 👈 Prevents line breaks */
+	max-width: 300px;
+	color: #ffa87a;
+	margin-top: 2px;
+	margin-left: 5%;
+	-webkit-text-stroke: 2px #1f1613;
+	-webkit-text-fill-color: #c76132; /* required so text color isn’t overwritten */
+}
+/* stat Text on the plank */
+.stats-text {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 700;
+	font-style: normal;
+	font-size: 30px;
+	max-width: 280px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: fit-content; /* 👈 Makes text adjust dynamically */
+	transform-origin: left;
+
+	-webkit-text-stroke: 1.5px #1f1613;
+	-webkit-text-fill-color: #c76132;
+	text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
+		-1px -1px 0 #000;
+
+	margin-top: -10px;
+	margin-left: 10%;
+}
+
+.amount-upgrades-text {
+	position: absolute; /* Ensures it moves with its container */
+	width: auto; /* Prevents stretching */
+	top: 25px; /* tweak these */
+	left: 300px; /* to position on the plank */
+
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 700;
+	font-style: normal;
+	font-size: 40px;
+
+	-webkit-text-stroke: 1.5px #1f1613;
+	-webkit-text-fill-color: #765228; /* required so text color isn’t overwritten */
+	text-shadow: 1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000,
+		-1px -1px 0 #000;
+}
+
+.snuscard {
+	text-align: center;
+	margin-top: -20vh;
+	margin-right: 20vh;
+}
+
+.currency-container {
+	background: url("images/plank1.png") no-repeat center center;
+	width: 500px;
+	height: 100px; /* Set a height or let content dictate the height */
+	filter: drop-shadow(10px 16px 7.9px rgba(0, 0, 0, 0.75));
+	background-size: cover;
+	display: block;
+	margin-top: 30%;
+}
+
+.currency {
+	font-family: "Averia Sans Libre", serif;
+	font-weight: 900;
+	font-style: normal;
+	font-size: 5vh;
+	color: white;
+	filter: drop-shadow(5px 2px 2px rgba(0, 0, 0, 0.9));
+}
+
+#currency.currency {
+	padding-top: 2vh;
+}
+.snusbtn {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	margin-top: 10vh;
+}
+
+@keyframes scaleUp {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.enlarge {
+	animation: scaleUp 0.2s ease;
+}
+
+.shadow-wrapper {
+	display: inline-block;
+	border-radius: 100%;
+	box-shadow: 19px 19px 40px -3px rgba(0, 0, 0, 0.75);
+	border: solid 10px #261e17;
+	height: 300px;
+	margin-top: 50px;
+}
+
+/* Hide all buy buttons initially */
+.buy-item {
+	display: none;
+}
+
+/* Make only the first button visible */
+#auto-btn {
+	display: flex;
+}
+
+#end-screen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	z-index: 9999; /* Make sure it’s above other content */
+	display: none; /* Hide initially */
+}
+
+#reset-screen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 2rem;
+	z-index: 9999; /* Make sure it’s above other content */
+	display: none; /* Hide initially */
+}
+#booster-screen {
+	position: fixed; /* Ensures it overlays the game */
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.9); /* Slight transparency */
+	overflow-y: auto; /* 🔥 Enables vertical scrolling */
+	padding: 20px;
+	display: none; /* Hide initially */
+	flex-direction: column;
+	align-items: center;
+	z-index: 1000;
+}
+#brand-screen {
+	position: fixed; /* Ensures it overlays the game */
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.9); /* Slight transparency */
+	overflow-y: auto; /* 🔥 Enables vertical scrolling */
+	padding: 20px;
+	display: none; /* Hide initially */
+	flex-direction: column;
+	align-items: center;
+	z-index: 1000;
+}
+
+/* Ensures the brand grid is centered and scrollable */
+.brand-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 20px;
+	justify-content: center;
+	max-width: 90%;
+	margin: 0 auto;
+	padding-bottom: 100px;
+}
+
+.brand-item {
+	background: #2b2b2b;
+	padding: 15px;
+	border-radius: 10px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between; /* Ensures elements are evenly spaced */
+	height: 250px; /* 🔥 Ensures all brand items have the same height */
+}
+
+.brand-item img {
+	width: 120px;
+	height: 120px;
+	object-fit: contain;
+}
+
+.brand-item p {
+	flex-grow: 1; /* 🔥 Pushes the button down */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	color: white;
+}
+
+.brand-item button {
+	width: 90%;
+	margin-top: auto; /* 🔥 Forces button to always be at the bottom */
+	padding: 8px;
+	cursor: pointer;
+	background: #fff;
+	color: #000;
+	border: none;
+	border-radius: 5px;
+}
+
+#close-brand-screen {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	background: red;
+	color: white;
+	font-size: 20px;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+#close-booster-screen {
+	position: absolute;
+	top: 10px;
+	right: 40px;
+	background: red;
+	color: white;
+	font-size: 20px;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+#close-booster-screen:hover {
+	background: darkred;
+}
+
+#close-brand-screen:hover {
+	background: darkred;
+}
+
+#hide-screen {
+	padding: 10px 20px;
+	font-size: 1rem;
+	cursor: pointer;
+	background-color: #30251d;
+	border: none;
+	color: white;
+	margin-top: 20px;
+}
+
+#audio-controls {
+	padding-left: 4vh;
+}
+
+/* 🎚️ Volume Slider */
+#volume-slider {
+	-webkit-appearance: none; /* Remove default styles */
+	width: 180px;
+	max-width: 280px;
+	height: 8px;
+	background: #c76132; /* Slider bar color */
+	border-radius: 0px;
+	outline: none;
+	cursor: pointer;
+}
+
+/* 🎵 Custom Thumb (Slider Button) */
+#volume-slider::-webkit-slider-thumb {
+	-webkit-appearance: none; /* Remove default styling */
+	appearance: none;
+	width: 20px; /* Size of the thumb */
+	height: 30px;
+	background: url("images/snus.png") no-repeat center center;
+	background-size: contain;
+	cursor: pointer;
+	border: none; /* Removes default border */
+}
+
+/* 🦊 Firefox Support */
+#volume-slider::-moz-range-thumb {
+	max-width: 30px;
+	height: 30px;
+	background: url("images/snus.png") no-repeat center center;
+	background-size: contain;
+	cursor: pointer;
+	border: none;
+}
+
+#prev-track {
+	margin-right: 20px;
+	background-color: #c76132;
+}
+#play-pause {
+	background-color: #c76132;
+}
+#next-track {
+	margin-right: 60px;
+	margin-left: 20px;
+	background-color: #c76132;
+}
